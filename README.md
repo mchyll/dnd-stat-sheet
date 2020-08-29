@@ -1,3 +1,7 @@
+# dnd-stat-sheet
+D&amp;D Character sheet &amp; Item stats
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
