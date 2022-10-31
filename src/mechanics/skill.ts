@@ -1,23 +1,17 @@
 import {
     StrAbility as Str, DexAbility as Dex,
     IntAbility as Int, WisAbility as Wis, ChaAbility as Cha,
-    IAbilityType, getAbilityScore
+    AbilityType, getAbilityScore
 } from "./ability";
 import { ICharacter } from "./character";
 
 
-export interface ISkill {
-    name: string;
-    abilityType: IAbilityType;
-    getMod(character: ICharacter): number;
-}
-
 export class Skill {
-    constructor(public readonly name: string, public readonly abilityType: IAbilityType) {
+    constructor(public readonly name: string, public readonly abilityType: AbilityType) {
     }
 
     getMod(character: ICharacter): number {
-        return getAbilityScore(character, this.abilityType).mod + (character.proficientSkills.has(this) ? character.proficiencyBonus : 0);
+        return getAbilityScore(character, this.abilityType).mod + (character.proficientSkills.indexOf(this) >= 0 ? character.proficiencyBonus : 0);
     }
 }
 

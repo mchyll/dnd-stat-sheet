@@ -4,9 +4,9 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Yarn start",
             "type": "npm",
             "script": "start",
-            "label": "Yarn start",
             "group": {
                 "kind": "build",
                 "isDefault": true

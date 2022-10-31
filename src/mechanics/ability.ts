@@ -1,44 +1,21 @@
-export interface IAbilityType {
-    name: string;
-    shortName: string;
+import { ICharacter } from "./character";
+
+export class AbilityType {
+    constructor(readonly name: string, readonly shortName: string) { }
 }
 
-export const StrAbility: IAbilityType = { name: "Strength", shortName: "STR" };
-export const DexAbility: IAbilityType = { name: "Dexterity", shortName: "DEX" };
-export const ConAbility: IAbilityType = { name: "Constitution", shortName: "CON" };
-export const IntAbility: IAbilityType = { name: "Intelligence", shortName: "INT" };
-export const WisAbility: IAbilityType = { name: "Wisdom", shortName: "WIS" };
-export const ChaAbility: IAbilityType = { name: "Charisma", shortName: "CHA" };
+export const StrAbility = new AbilityType("Strength", "STR");
+export const DexAbility = new AbilityType("Dexterity", "DEX");
+export const ConAbility = new AbilityType("Constitution", "CON");
+export const IntAbility = new AbilityType("Intelligence", "INT");
+export const WisAbility = new AbilityType("Wisdom", "WIS");
+export const ChaAbility = new AbilityType("Charisma", "CHA");
 
-export interface IAbilityScore {
-    type: IAbilityType;
-    score: number;
-    mod: number;
-}
-
-export interface IAbilityScoreProvider {
-    str: IAbilityScore;
-    dex: IAbilityScore;
-    con: IAbilityScore;
-    int: IAbilityScore;
-    wis: IAbilityScore;
-    cha: IAbilityScore;
-}
-
-export class AbilityScore implements IAbilityScore {
-    private _type: IAbilityType;
-    private _score: number;
-
-    constructor(type: IAbilityType, score: number) {
-        if (score < 0 || score > 30) {
+export class AbilityScore {
+    constructor(public readonly type: AbilityType, private _score: number) {
+        if (_score < 0 || _score > 30) {
             throw new RangeError("Score outside legal range 0 <= x <= 30");
         }
-        this._type = type;
-        this._score = score;
-    }
-
-    get type(): IAbilityType {
-        return this._type;
     }
 
     get score(): number {
@@ -57,14 +34,14 @@ export class AbilityScore implements IAbilityScore {
     }
 }
 
-export function getAbilityScore(provider: IAbilityScoreProvider, type: IAbilityType): IAbilityScore {
+export function getAbilityScore(character: ICharacter, type: AbilityType): AbilityScore {
     switch (type) {
-        case StrAbility: return provider.str;
-        case DexAbility: return provider.dex;
-        case ConAbility: return provider.con;
-        case IntAbility: return provider.int;
-        case WisAbility: return provider.wis;
-        case ChaAbility: return provider.cha;
+        case StrAbility: return character.str;
+        case DexAbility: return character.dex;
+        case ConAbility: return character.con;
+        case IntAbility: return character.int;
+        case WisAbility: return character.wis;
+        case ChaAbility: return character.cha;
         default: throw new Error("Illegal ability type");
     }
 }

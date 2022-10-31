@@ -1,26 +1,33 @@
 import {
-    AbilityScore, IAbilityScore, IAbilityScoreProvider,
-    StrAbility, DexAbility, ConAbility, IntAbility, WisAbility, ChaAbility, IAbilityType, getAbilityScore
+    AbilityScore,
+    ChaAbility, ConAbility, DexAbility,
+    IntAbility, StrAbility, WisAbility
 } from "./ability";
-import { ISkill } from "./skill";
+import { Skill } from "./skill";
 
 
-export interface ICharacter extends IAbilityScoreProvider {
+export interface ICharacter {
+    str: AbilityScore;
+    dex: AbilityScore;
+    con: AbilityScore;
+    int: AbilityScore;
+    wis: AbilityScore;
+    cha: AbilityScore;
     proficiencyBonus: number;
-    proficientSkills: Set<ISkill>;
+    proficientSkills: Skill[];
 }
 
 export class Character implements ICharacter {
 
-    str: IAbilityScore;
-    dex: IAbilityScore;
-    con: IAbilityScore;
-    int: IAbilityScore;
-    wis: IAbilityScore;
-    cha: IAbilityScore;
+    str: AbilityScore;
+    dex: AbilityScore;
+    con: AbilityScore;
+    int: AbilityScore;
+    wis: AbilityScore;
+    cha: AbilityScore;
 
     proficiencyBonus: number;
-    proficientSkills: Set<ISkill>;
+    proficientSkills: Skill[];
 
     constructor() {
         this.str = new AbilityScore(StrAbility, 10);
@@ -31,10 +38,10 @@ export class Character implements ICharacter {
         this.cha = new AbilityScore(ChaAbility, 10);
 
         this.proficiencyBonus = 0;
-        this.proficientSkills = new Set();
+        this.proficientSkills = [];
     }
 
-    getSkillMod(skill: ISkill): number {
+    getSkillMod(skill: Skill): number {
         return skill.getMod(this);
     }
 }

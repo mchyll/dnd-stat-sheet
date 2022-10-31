@@ -1,27 +1,28 @@
 import React from "react";
-import { ISkill, AllSkills } from "../mechanics/skill";
+import { Skill, AllSkills } from "../mechanics/skill";
 import { ICharacter } from "../mechanics/character";
 
 
 interface ISkillProps {
-    character: ICharacter;
-    skill: ISkill;
+  character: ICharacter;
+  skill: Skill;
 }
 
-export const SkillComponent = (props: ISkillProps) => <>
+export const SkillComponent = (props: ISkillProps) =>
+  <>
     {
-        (props.character.proficientSkills.has(props.skill) ? "\u25CF" : "\u25CB") + " "
-        + props.skill.getMod(props.character) + " "
-        + props.skill.name + " ("
-        + props.skill.abilityType.shortName + ")"
+      (props.character.proficientSkills.indexOf(props.skill) >= 0 ? "\u25CF" : "\u25CB") + " "
+      + props.skill.getMod(props.character) + " "
+      + props.skill.name + " ("
+      + props.skill.abilityType.shortName + ")"
     }
     <br />
-</>;
+  </>
 
 interface ISkillListProps {
-    character: ICharacter;
+  character: ICharacter;
 }
 
 export const SkillListComponent = (props: ISkillListProps) => <>
-    {AllSkills.map(s => <SkillComponent character={props.character} skill={s} />)}
+  {AllSkills.map(s => <SkillComponent character={props.character} skill={s} />)}
 </>;
